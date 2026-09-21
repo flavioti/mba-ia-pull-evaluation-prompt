@@ -147,6 +147,33 @@ def validate_prompt_structure(prompt_data: Dict[str, Any]) -> tuple[bool, list]:
     return (len(errors) == 0, errors)
 
 
+def content_to_text(content: Any) -> str:
+    """
+    Normaliza o `content` de uma resposta de LLM para string.
+
+    Modelos Gemini recentes retornam `content` como lista de blocos
+    (ex.: [{"type": "text", "text": "..."}]) em vez de string.
+    """
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict):
+                if block.get("type", "text") == "text" and isinstance(block.get("text"), str):
+                    parts.append(block["text"])
+            else:
+                text = getattr(block, "text", None)
+                if isinstance(text, str):
+                    parts.append(text)
+        return "".join(parts)
+    return str(content)
+
+
 def extract_json_from_response(response_text: str) -> Optional[Dict[str, Any]]:
     """
     Extrai JSON de uma resposta de LLM que pode conter texto adicional.

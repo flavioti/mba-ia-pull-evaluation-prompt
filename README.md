@@ -1,5 +1,9 @@
 # Pull, Otimização e Avaliação de Prompts com LangChain e LangSmith
 
+## Resultado
+
+- Ver confirmação da execução em logs de execução, arquivo 'log.txt'. (entrega do projeto e confirmação)
+
 ## Objetivo
 
 Você deve entregar um software capaz de:

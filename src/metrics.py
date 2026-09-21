@@ -27,7 +27,7 @@ import re
 from typing import Dict, Any
 from dotenv import load_dotenv
 from langchain_core.messages import SystemMessage, HumanMessage
-from utils import get_eval_llm
+from utils import get_eval_llm, content_to_text
 
 load_dotenv()
 
@@ -44,6 +44,9 @@ def extract_json_from_response(response_text: str) -> Dict[str, Any]:
     """
     Extrai JSON de uma resposta de LLM que pode conter texto adicional.
     """
+    # Gemini pode retornar o content como lista de blocos; normaliza para str
+    response_text = content_to_text(response_text)
+
     try:
         # Tentar parsear diretamente
         return json.loads(response_text)

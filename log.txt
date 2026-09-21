@@ -1,0 +1,176 @@
+(mba-ia-desafio-ingestao-busca-py3.10) magitek@magitek-550XED:~/mba/mba-ia-pull-evaluation-prompt$ python src/evaluate.py 
+
+==================================================
+AVALIAÇÃO DE PROMPTS OTIMIZADOS
+==================================================
+
+Provider: google
+Modelo Principal: models/gemini-3.6-flash
+Modelo de Avaliação: models/gemini-3.6-flash
+
+10:54:36 | INFO    | Configuração: provider=google | LLM_MODEL=models/gemini-3.6-flash | EVAL_MODEL=models/gemini-3.6-flash | LOG_LEVEL=INFO | cwd=/home/magitek/mba/mba-ia-pull-evaluation-prompt
+10:54:36 | INFO    | Variáveis obrigatórias: {'LANGSMITH_API_KEY': 'ok', 'LLM_PROVIDER': 'ok', 'GOOGLE_API_KEY': 'ok'}
+10:54:36 | INFO    | Projeto LangSmith: mba-ia-pull-evaluation-prompt
+Criando dataset de avaliação: mba-ia-pull-evaluation-prompt-eval...
+10:54:36 | INFO    | Lendo dataset local: /home/magitek/mba/mba-ia-pull-evaluation-prompt/datasets/bug_to_user_story.jsonl
+10:54:36 | INFO    | JSONL lido: 2 exemplos
+   ✓ Carregados 2 exemplos do arquivo datasets/bug_to_user_story.jsonl
+10:54:36 | INFO    | Consultando LangSmith por dataset 'mba-ia-pull-evaluation-prompt-eval'...
+10:54:37 | INFO    | Dataset já existe (id=573e2448-4b67-4d83-9404-4ff77f32633b), reutilizando sem recriar exemplos
+   ✓ Dataset 'mba-ia-pull-evaluation-prompt-eval' já existe, usando existente
+
+======================================================================
+PROMPTS PARA AVALIAR
+======================================================================
+
+Este script irá puxar prompts do LangSmith Hub.
+Certifique-se de ter feito push dos prompts antes de avaliar:
+  python src/push_prompts.py
+
+10:54:37 | INFO    | Prompts a avaliar (1): ['magitech/bug_to_user_story_v2']
+10:54:37 | INFO    | Prompt 1/1: magitech/bug_to_user_story_v2
+
+🔍 Avaliando: magitech/bug_to_user_story_v2
+10:54:37 | INFO    | ===== Início da avaliação de 'magitech/bug_to_user_story_v2' =====
+   Puxando prompt do LangSmith Hub: magitech/bug_to_user_story_v2
+10:54:37 | INFO    | Pull do prompt 'magitech/bug_to_user_story_v2' (public=permitido)...
+10:54:37 | INFO    | Prompt carregado em 0.34s | tipo=ChatPromptTemplate | variáveis=['bug_report']
+   ✓ Prompt carregado com sucesso
+10:54:37 | INFO    | Listando exemplos do dataset 'mba-ia-pull-evaluation-prompt-eval'...
+   Dataset: 15 exemplos
+10:54:38 | INFO    | 15 exemplos carregados do LangSmith
+10:54:39 | INFO    | LLM principal instanciado: ChatGoogleGenerativeAI (model=models/gemini-3.6-flash)
+10:54:39 | INFO    | Modelo juiz (EVAL_MODEL): models/gemini-3.6-flash
+   Avaliando exemplos...
+10:54:39 | INFO    | --- Exemplo 1/15 (id=87de5b04-9264-4546-8814-96b8ab37c9a0) ---
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+10:55:00 | INFO    | Resposta do prompt gerada em 21.21s (5184 chars, content=list)
+10:55:00 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:55:19 | INFO    | Juiz concluído em 19.23s
+      [1/15] F1:0.94 Clarity:1.00 Precision:1.00
+10:55:19 | INFO    | Exemplo 1 concluído em 40.44s | médias parciais: F1=0.94 Clarity=1.00 Precision=1.00
+10:55:19 | INFO    | --- Exemplo 2/15 (id=c69c6a44-d66b-4cf6-8bd2-06d47b53d2cf) ---
+10:55:36 | INFO    | Resposta do prompt gerada em 16.81s (5239 chars, content=list)
+10:55:36 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:55:57 | INFO    | Juiz concluído em 21.20s
+      [2/15] F1:0.93 Clarity:1.00 Precision:1.00
+10:55:57 | INFO    | Exemplo 2 concluído em 38.01s | médias parciais: F1=0.93 Clarity=1.00 Precision=1.00
+10:55:57 | INFO    | --- Exemplo 3/15 (id=6d6a8d2a-2d47-4d50-8082-93e27587c811) ---
+10:56:11 | INFO    | Resposta do prompt gerada em 13.41s (4400 chars, content=list)
+10:56:11 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:56:28 | INFO    | Juiz concluído em 17.79s
+      [3/15] F1:0.94 Clarity:1.00 Precision:1.00
+10:56:28 | INFO    | Exemplo 3 concluído em 31.20s | médias parciais: F1=0.93 Clarity=1.00 Precision=1.00
+10:56:28 | INFO    | --- Exemplo 4/15 (id=3a559a0f-33a4-4de4-9e86-4352fa073a0c) ---
+10:56:38 | INFO    | Resposta do prompt gerada em 9.35s (948 chars, content=list)
+10:56:38 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:56:58 | INFO    | Juiz concluído em 20.28s
+      [4/15] F1:0.73 Clarity:1.00 Precision:1.00
+10:56:58 | INFO    | Exemplo 4 concluído em 29.63s | médias parciais: F1=0.88 Clarity=1.00 Precision=1.00
+10:56:58 | INFO    | --- Exemplo 5/15 (id=9d55306a-6a26-40f0-8f07-c3877ad93199) ---
+10:57:07 | INFO    | Resposta do prompt gerada em 9.21s (1298 chars, content=list)
+10:57:07 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:57:28 | INFO    | Juiz concluído em 20.28s
+      [5/15] F1:0.88 Clarity:1.00 Precision:0.98
+10:57:28 | INFO    | Exemplo 5 concluído em 29.49s | médias parciais: F1=0.88 Clarity=1.00 Precision=1.00
+10:57:28 | INFO    | --- Exemplo 6/15 (id=93071e6a-177b-4d79-b297-1ffc49d561eb) ---
+10:57:34 | INFO    | Resposta do prompt gerada em 6.85s (1100 chars, content=list)
+10:57:34 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:57:52 | INFO    | Juiz concluído em 17.42s
+      [6/15] F1:0.89 Clarity:0.99 Precision:1.00
+10:57:52 | INFO    | Exemplo 6 concluído em 24.27s | médias parciais: F1=0.88 Clarity=1.00 Precision=1.00
+10:57:52 | INFO    | --- Exemplo 7/15 (id=df772f5c-b197-460c-97cf-2def87e7597e) ---
+10:58:00 | INFO    | Resposta do prompt gerada em 7.87s (1164 chars, content=list)
+10:58:00 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:58:22 | INFO    | Juiz concluído em 22.46s
+      [7/15] F1:0.95 Clarity:1.00 Precision:1.00
+10:58:22 | INFO    | Exemplo 7 concluído em 30.33s | médias parciais: F1=0.89 Clarity=1.00 Precision=1.00
+10:58:22 | INFO    | --- Exemplo 8/15 (id=0d84fc8e-9f07-4083-a53e-44c76cfbcfbe) ---
+10:58:28 | INFO    | Resposta do prompt gerada em 5.91s (1515 chars, content=list)
+10:58:28 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:58:48 | INFO    | Juiz concluído em 19.97s
+      [8/15] F1:0.95 Clarity:0.98 Precision:1.00
+10:58:48 | INFO    | Exemplo 8 concluído em 25.89s | médias parciais: F1=0.90 Clarity=1.00 Precision=1.00
+10:58:48 | INFO    | --- Exemplo 9/15 (id=dd785a1b-73d8-406f-a7dd-8037e82ea4fc) ---
+10:58:54 | INFO    | Resposta do prompt gerada em 6.45s (943 chars, content=list)
+10:58:54 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:59:20 | INFO    | Juiz concluído em 25.19s
+      [9/15] F1:0.82 Clarity:1.00 Precision:1.00
+10:59:20 | INFO    | Exemplo 9 concluído em 31.65s | médias parciais: F1=0.89 Clarity=1.00 Precision=1.00
+10:59:20 | INFO    | --- Exemplo 10/15 (id=a8904572-97f9-435b-801e-80a0c17b083d) ---
+10:59:27 | INFO    | Resposta do prompt gerada em 7.68s (1041 chars, content=list)
+10:59:27 | INFO    | Chamando juiz: F1, Clarity, Precision...
+10:59:48 | INFO    | Juiz concluído em 20.89s
+      [10/15] F1:0.90 Clarity:1.00 Precision:1.00
+10:59:48 | INFO    | Exemplo 10 concluído em 28.57s | médias parciais: F1=0.89 Clarity=1.00 Precision=1.00
+10:59:48 | INFO    | --- Exemplo 11/15 (id=31bfd195-6d8e-4309-8ebb-061b8482fbda) ---
+10:59:52 | INFO    | Resposta do prompt gerada em 4.23s (532 chars, content=list)
+10:59:52 | INFO    | Chamando juiz: F1, Clarity, Precision...
+11:00:15 | INFO    | Juiz concluído em 22.47s
+      [11/15] F1:0.92 Clarity:1.00 Precision:0.98
+11:00:15 | INFO    | Exemplo 11 concluído em 26.70s | médias parciais: F1=0.89 Clarity=1.00 Precision=1.00
+11:00:15 | INFO    | --- Exemplo 12/15 (id=f63fef53-c090-4531-97f4-7c7458752213) ---
+11:00:21 | INFO    | Resposta do prompt gerada em 5.96s (523 chars, content=list)
+11:00:21 | INFO    | Chamando juiz: F1, Clarity, Precision...
+11:00:38 | INFO    | Juiz concluído em 17.51s
+      [12/15] F1:0.82 Clarity:0.98 Precision:0.98
+11:00:38 | INFO    | Exemplo 12 concluído em 23.48s | médias parciais: F1=0.89 Clarity=1.00 Precision=1.00
+11:00:38 | INFO    | --- Exemplo 13/15 (id=3d4c4d1d-e0e6-411c-8c3f-bea44f2853d0) ---
+11:00:44 | INFO    | Resposta do prompt gerada em 5.43s (590 chars, content=list)
+11:00:44 | INFO    | Chamando juiz: F1, Clarity, Precision...
+11:01:02 | INFO    | Juiz concluído em 18.43s
+      [13/15] F1:1.00 Clarity:1.00 Precision:1.00
+11:01:02 | INFO    | Exemplo 13 concluído em 23.86s | médias parciais: F1=0.90 Clarity=1.00 Precision=1.00
+11:01:02 | INFO    | --- Exemplo 14/15 (id=8109b7c9-f91c-4bbf-8ebf-3b4b3c0dad6e) ---
+11:01:08 | INFO    | Resposta do prompt gerada em 5.53s (573 chars, content=list)
+11:01:08 | INFO    | Chamando juiz: F1, Clarity, Precision...
+11:01:24 | INFO    | Juiz concluído em 16.59s
+      [14/15] F1:0.95 Clarity:1.00 Precision:1.00
+11:01:24 | INFO    | Exemplo 14 concluído em 22.12s | médias parciais: F1=0.90 Clarity=1.00 Precision=1.00
+11:01:24 | INFO    | --- Exemplo 15/15 (id=d6f81d41-4d32-4943-b93c-456a17128f9e) ---
+11:01:31 | INFO    | Resposta do prompt gerada em 6.35s (500 chars, content=list)
+11:01:31 | INFO    | Chamando juiz: F1, Clarity, Precision...
+11:01:45 | INFO    | Juiz concluído em 14.34s
+      [15/15] F1:1.00 Clarity:1.00 Precision:1.00
+11:01:45 | INFO    | Exemplo 15 concluído em 20.69s | médias parciais: F1=0.91 Clarity=1.00 Precision=1.00
+11:01:45 | INFO    | Loop concluído: 15 avaliados, 0 ignorados, 428.2s no total
+11:01:45 | INFO    | Médias finais: F1=0.9074 Clarity=0.9967 Precision=0.9960 | Helpfulness=0.9963 Correctness=0.9517
+
+==================================================
+Prompt: magitech/bug_to_user_story_v2
+==================================================
+
+Métricas Derivadas:
+  - Helpfulness: 1.00 ✓
+  - Correctness: 0.95 ✓
+
+Métricas Base:
+  - F1-Score: 0.91 ✓
+  - Clarity: 1.00 ✓
+  - Precision: 1.00 ✓
+
+--------------------------------------------------
+📊 MÉDIA GERAL: 0.9696
+--------------------------------------------------
+11:01:45 | INFO    | Decisão: média=0.9696 | todas>=0.8? True | aprovado? True | scores={'helpfulness': 0.9963, 'correctness': 0.9517, 'f1_score': 0.9074, 'clarity': 0.9967, 'precision': 0.996}
+
+✅ STATUS: APROVADO - Todas as métricas >= 0.8
+
+==================================================
+RESUMO FINAL
+==================================================
+
+Prompts avaliados: 1
+Aprovados: 1
+Reprovados: 0
+
+11:01:45 | INFO    | Resumo: avaliados=1 aprovados=1 reprovados=0 | tempo total=428.9s | all_passed=True
+✅ Todos os prompts atingiram todas as métricas >= 0.8!
+
+✓ Confira os resultados em:
+  https://smith.langchain.com/projects/mba-ia-pull-evaluation-prompt (https://smith.langchain.com/o/796a2a12-f092-4c62-863a-f91f2a5facfb/projects/p/98793d9a-e9ac-4eb1-918a-3ec7fd2632d1)
+
+Próximos passos:
+1. Documente o processo no README.md
+2. Capture screenshots das avaliações
+3. Faça commit e push para o GitHub

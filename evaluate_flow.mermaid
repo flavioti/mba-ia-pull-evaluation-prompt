@@ -1,0 +1,73 @@
+flowchart TD
+    START([python src/evaluate.py]) --> MAIN["main()"]
+
+    subgraph SETUP["1. Configuração"]
+        MAIN --> ENV["Lê .env<br/>LLM_PROVIDER, LLM_MODEL, EVAL_MODEL"]
+        ENV --> CHK{"check_env_vars()<br/>LANGSMITH_API_KEY +<br/>OPENAI_API_KEY ou GOOGLE_API_KEY"}
+        CHK -- faltando --> EXIT1([return 1])
+        CHK -- ok --> JSONL{"datasets/bug_to_user_story.jsonl<br/>existe?"}
+        JSONL -- não --> EXIT1
+        JSONL -- sim --> USER{"USERNAME_LANGSMITH_HUB<br/>configurada?"}
+        USER -- não --> EXIT1
+    end
+
+    subgraph DATASET["2. Dataset no LangSmith"]
+        USER -- sim --> CREATE["create_evaluation_dataset()"]
+        CREATE --> LOAD["load_dataset_from_jsonl()<br/>lê inputs / outputs"]
+        LOAD --> EXISTS{"Dataset<br/>'projeto-eval'<br/>já existe?"}
+        EXISTS -- sim --> REUSE["Reutiliza existente"]
+        EXISTS -- não --> NEWDS["client.create_dataset()<br/>+ create_example() para cada linha"]
+    end
+
+    REUSE --> LOOP
+    NEWDS --> LOOP
+    LOOP["Para cada prompt:<br/>username/bug_to_user_story_v2"] --> EP["evaluate_prompt()"]
+
+    subgraph EVAL["3. evaluate_prompt()"]
+        EP --> PULL["pull_prompt_from_langsmith()<br/>Client().pull_prompt()"]
+        PULL -- erro --> PERR["Imprime ações de correção<br/>e re-lança exceção"]
+        PULL -- ok --> EXS["client.list_examples()"]
+        EXS --> GETLLM["get_llm()<br/>LLM do LLM_MODEL"]
+        GETLLM --> EX["Para cada exemplo"]
+        EX --> RUN["evaluate_prompt_on_example()<br/>chain = prompt | llm<br/>chain.invoke(inputs)<br/>content_to_text(response.content)"]
+        RUN --> ANS{"answer<br/>vazio?"}
+        ANS -- sim --> SKIP["Ignora exemplo"]
+        ANS -- não --> JUDGE
+
+        subgraph METRICS["LLM-as-Judge (metrics.py, EVAL_MODEL)"]
+            JUDGE["evaluate_f1_score()"]
+            JUDGE --> CL["evaluate_clarity()"]
+            CL --> PR["evaluate_precision()"]
+        end
+
+        PR --> ACC["Acumula scores"]
+        SKIP --> NEXT{"Mais<br/>exemplos?"}
+        ACC --> NEXT
+        NEXT -- sim --> EX
+        NEXT -- não --> AVG["Médias:<br/>avg_f1, avg_clarity, avg_precision"]
+        AVG --> DER["Métricas derivadas<br/>helpfulness = (clarity + precision) / 2<br/>correctness = (f1 + precision) / 2"]
+    end
+
+    PERR --> FAIL["scores = 0.0<br/>passed = False"]
+    DER --> DISP["display_results()"]
+
+    subgraph RESULT["4. Resultado"]
+        DISP --> AVGALL["Média geral das 5 métricas"]
+        AVGALL --> PASS{"Todas as métricas >= 0.8<br/>e média >= 0.8?"}
+        PASS -- sim --> OK["✅ APROVADO"]
+        PASS -- não --> NOK["❌ REPROVADO<br/>lista métricas abaixo de 0.8"]
+    end
+
+    OK --> SUM
+    NOK --> SUM
+    FAIL --> SUM
+    SUM["RESUMO FINAL<br/>avaliados / aprovados / reprovados"] --> ALL{"Todos<br/>aprovados?"}
+    ALL -- sim --> EXIT0([return 0])
+    ALL -- não --> EXIT1B([return 1<br/>refatorar prompt e repetir push])
+
+    classDef ok fill:#d4edda,stroke:#28a745,color:#155724
+    classDef bad fill:#f8d7da,stroke:#dc3545,color:#721c24
+    classDef ext fill:#e7f0fd,stroke:#3b82f6,color:#1e3a8a
+    class OK,EXIT0 ok
+    class NOK,FAIL,EXIT1,EXIT1B,PERR bad
+    class PULL,CREATE,NEWDS,EXS,JUDGE,CL,PR ext
